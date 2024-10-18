@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:06:37 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 12:16:11 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:25:43 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static int	ft_putun_base_n(uintptr_t nb, int n, char *base)
 		write(1, &base[0], 1);
 		return (1);
 	}
-	while (nb_copy != 0)
+	while (nb != 0)
 	{
-		arr[j] = base[nb_copy % n];
-		nb_copy = nb_copy / n;
+		arr[j] = base[nb % n];
+		nb = nb / n;
 		j++;
 	}
 	printed_char = printed_char + j;
@@ -65,16 +65,16 @@ static int	is_valid_base(char *base, int n)
 	return (1);
 }
 
-//using unitptr_t so can be used for all range of pointers int, non depending of the system (32- or 64-bits)
 int	ft_putun_base(uintptr_t nbr, char *base)
 {
 	int	n;
 
 	n = 0;
 	if (!base)
-		return ;
+		return (-1);
 	while (base[n] != '\0')
 		n++;
 	if (is_valid_base(base, n))
-		return (ft_putnbr_base_n(nbr, n, base));
+		return (ft_putun_base_n(nbr, n, base));
+	return (-1);
 }

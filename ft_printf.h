@@ -6,14 +6,14 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:04:31 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 12:18:12 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:08:38 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include "libft.h"
+# include "libft/libft.h"
 # include <stdarg.h>
 
 int	ft_printf(const char *format, ...);
