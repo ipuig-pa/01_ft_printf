@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:48:12 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 13:02:23 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 14:30:32 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,10 @@ int	ft_putnbr(int n)
 	}
 	if (n_c >= 10)
 	{
-		ft_putnbr(n_c / 10);
+		printed_char = printed_char + ft_putnbr(n_c / 10);
 	}
-	printed_char = printed_char + ft_putchar('0' + n_c % 10);
+	printed_char++;
+	ft_putchar('0' + n_c % 10);
 	return (printed_char);
 }
 
@@ -210,13 +211,13 @@ int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-	char	c = 'r';
-	char	s[3] = "Hey";
-	int		i = 0042;
-	int		d = 0042;
-	void	*p = (void *)s;
+	char				c = 'r';
+	char				s[4] = "Hey";
+	int					i = 32465442;
+	unsigned int		u = 32465442;
+	void				*p = (void *)s;
 
-	printf("PRINTF:: c: %c, s: %s, i: %i, d: %d, p: %p, count: %i\n", c, s, i, d, p, printf("c: %c, s: %s, i: %i, d: %d, p: %p", c, s, i, d, p));
-	//ft_printf("CUSTOM:: c: %c, s: %s, i: %i, d: %d, p: %p, count: %i", c, s, i, d, p, ft_printf("c: %c, s: %s, i: %i, d: %d, p: %p", c, s, i, d, p));
+	printf("count: %i\n", printf("PRINTF:: c: %c, s: %s, p: %p, d: %d, i: %i, u: %u, x: %x, X: %X, %%,", c, s, p, i, i, u, u, u));
+	ft_printf("count: %i\n", ft_printf("PRINTF:: c: %c, s: %s, p: %p, d: %d, i: %i, u: %u, x: %x, X: %X, %%,", c, s, p, i, i, u, u, u));
 	return (0);
 }
