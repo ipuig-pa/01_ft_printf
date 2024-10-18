@@ -6,38 +6,36 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:48:12 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/16 15:47:42 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 12:17:47 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdarg.h>
+#include "ft_printf.h"
 
-static int	write_arg(char	specifier, va_list args)
+static int	write_arg(char specifier, va_list args)
 {
+	int	printed_char;
+
 	if (specifier == 'c')
-		ft_putchar_fd(va_arg (args, char), 1);
+		printed_char = ft_putchar(va_arg (args, char));
 	else if (specifier == 's')
-		ft_putstr_fd(va_arg (args, char *, 1));
+		printed_char = ft_putstr(va_arg (args, char *));
 	else if (specifier == 'p')
-		(va_arg (args, void *, 1));
+		printed_char = ft_putptr(va_arg (args, void *));
 	else if (specifier == 'd' || specifier == 'i')
-		ft_putnbr_fd(va_arg (args, int, 1));
+		printed_char = ft_putnbr(va_arg (args, int));
 	else if (specifier == 'u')
+		printed_char = ft_putun_base((uintptr_t)va_arg (args, unsigned int));
 	else if (specifier == 'x')
+		printed_char = ft_putun_base((uintptr_t)va_arg (args, unsigned int));
 	else if (specifier == 'X')
+		printed_char = ft_putun_base((uintptr_t)va_arg (args, unsigned int));
 	else if (specifier == '%')
-
-	va_arg (args, char *);
-	va_arg (args, void *);
-	va_arg (args, int);
-	va_arg (args, int);
-	va_arg (args, unsigned int);
-	va_arg (args, int);
-	va_arg (args, int);
-	va_arg (args, char);
-
+		printed_char = ft_putchar('%');
+	return (printed_char);
 }
+
+//incloure on retornar error!
 
 int	ft_printf(const char *format, ...)
 {
@@ -58,12 +56,10 @@ int	ft_printf(const char *format, ...)
 			printed_char = printed_char + write_arg(format[i], args);
 		}
 		else
-		{
-			ft_putchar_fd(format[i], 1);
-			printed_char++;
-		}
+			printed_char = printed_char + ft_putchar(format[i]);
 		i++;
 	}
 	va_end (args_copy);
 	va_end (args);
+	return (printed_char);
 }
