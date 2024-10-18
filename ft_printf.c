@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:48:12 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 16:26:58 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:54:06 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static int	write_arg(char specifier, va_list args)
 	va_arg (args, unsigned int), "0123456789ABCDEF");
 	else if (specifier == '%')
 		printed_char = ft_putchar('%');
-	else
-		printed_char = 0;
 	return (printed_char);
 }
 
@@ -61,10 +59,7 @@ int	ft_printf(const char *format, ...)
 		{
 			i++;
 			printed_char = write_arg(format[i], args);
-			if (printed_char == -1)
-				return (-1);
-			else
-				total_printed = total_printed + printed_char;
+			total_printed = total_printed + printed_char;
 		}
 		else
 			total_printed = total_printed + ft_putchar(format[i]);

@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:03:10 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 16:25:17 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:44:29 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ int	ft_putchar(char c)
 {
 	int	char_counter;
 
-	write(1, &c, 1);
-	char_counter = 1;
+	char_counter = write(1, &c, 1);
 	return (char_counter);
 }
 
@@ -26,12 +25,9 @@ int	ft_putstr(char *s)
 	int	char_counter;
 
 	if (!s)
-	{
-		write(1, "(null)", 6);
-		return (6);
-	}
-	char_counter = ft_strlen(s);
-	write(1, s, char_counter);
+		char_counter = write(1, "(null)", 6);
+	else
+		char_counter = write(1, s, ft_strlen(s));
 	return (char_counter);
 }
 
@@ -43,8 +39,7 @@ int	ft_putptr(void *p)
 	if (!p)
 		return (ft_putstr("0x0"));
 	ptr = (uintptr_t)p;
-	char_counter = ft_putstr("0x");
-	char_counter = char_counter + ft_putun_base(ptr, "0123456789abcdef");
+	char_counter = ft_putstr("0x") + ft_putun_base(ptr, "0123456789abcdef");
 	return (char_counter);
 }
 
@@ -57,15 +52,13 @@ int	ft_putnbr(int n)
 	printed_char = 0;
 	if (n < 0)
 	{
-		write(1, "-", 1);
+		printed_char = write(1, "-", 1);
 		n_c = -n_c;
-		printed_char = 1;
 	}
 	if (n_c >= 10)
 	{
 		printed_char = printed_char + ft_putnbr(n_c / 10);
 	}
-	printed_char++;
-	ft_putchar('0' + n_c % 10);
+	printed_char = printed_char + ft_putchar('0' + n_c % 10);
 	return (printed_char);
 }

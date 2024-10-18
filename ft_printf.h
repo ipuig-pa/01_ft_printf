@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:04:31 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 16:08:38 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:48:34 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include <stdarg.h>
+# include <unistd.h>
 
 int	ft_printf(const char *format, ...);
 int	ft_putchar(char c);
