@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:48:12 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 14:30:32 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:53:28 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ int	ft_putun_base(uintptr_t nbr, char *base)
 
 	n = 0;
 	if (!base)
-		return (0);
+		return (-1);
 	while (base[n] != '\0')
 		n++;
 	if (is_valid_base(base, n))
 		return (ft_putun_base_n(nbr, n, base));
-	return (0);
+	return (-1);
 }
 
 
@@ -111,7 +111,10 @@ int	ft_putstr(char *s)
 	int	char_counter;
 
 	if (!s)
-		return (0);
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	char_counter = ft_strlen(s);
 	write(1, s, char_counter);
 	return (char_counter);
@@ -157,6 +160,7 @@ static int	write_arg(char specifier, va_list args)
 {
 	int	printed_char;
 
+	printed_char = -1;
 	if (specifier == 'c')
 		printed_char = ft_putchar((char)va_arg (args, int));
 	else if (specifier == 's')
@@ -166,14 +170,17 @@ static int	write_arg(char specifier, va_list args)
 	else if (specifier == 'd' || specifier == 'i')
 		printed_char = ft_putnbr(va_arg (args, int));
 	else if (specifier == 'u')
-		printed_char = ft_putun_base((uintptr_t)va_arg (args, unsigned int), "0123456789");
+		printed_char = ft_putun_base((uintptr_t) \
+	va_arg (args, unsigned int), "0123456789");
 	else if (specifier == 'x')
-		printed_char = ft_putun_base((uintptr_t)va_arg (args, unsigned int), "0123456789abcdef");
+		printed_char = ft_putun_base((uintptr_t) \
+	va_arg (args, unsigned int), "0123456789abcdef");
 	else if (specifier == 'X')
-		printed_char = ft_putun_base((uintptr_t)va_arg (args, unsigned int), "0123456789ABCDEF");
+		printed_char = ft_putun_base((uintptr_t) \
+	va_arg (args, unsigned int), "0123456789ABCDEF");
 	else if (specifier == '%')
 		printed_char = ft_putchar('%');
-	else 
+	else
 		printed_char = 0;
 	return (printed_char);
 }
@@ -183,28 +190,32 @@ static int	write_arg(char specifier, va_list args)
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	va_list	args_copy;
 	int		i;
 	int		printed_char;
+	int		total_printed;
 
 	va_start(args, format);
-	va_copy(args_copy, args);
 	i = 0;
-	printed_char = 0;
+	total_printed = 0;
+	if (!format)
+		return (-1);
 	while (format[i])
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			printed_char = printed_char + write_arg(format[i], args);
+			printed_char = write_arg(format[i], args);
+			if (printed_char == -1)
+				return (-1);
+			else
+				total_printed = total_printed + printed_char;
 		}
 		else
-			printed_char = printed_char + ft_putchar(format[i]);
+			total_printed = total_printed + ft_putchar(format[i]);
 		i++;
 	}
-	va_end (args_copy);
 	va_end (args);
-	return (printed_char);
+	return (total_printed);
 }
 
 #include <stdio.h>
@@ -215,9 +226,10 @@ int	main(void)
 	char				s[4] = "Hey";
 	int					i = 32465442;
 	unsigned int		u = 32465442;
-	void				*p = (void *)s;
+	void				*p = NULL;
+	//(void *)s;
 
-	printf("count: %i\n", printf("PRINTF:: c: %c, s: %s, p: %p, d: %d, i: %i, u: %u, x: %x, X: %X, %%,", c, s, p, i, i, u, u, u));
-	ft_printf("count: %i\n", ft_printf("PRINTF:: c: %c, s: %s, p: %p, d: %d, i: %i, u: %u, x: %x, X: %X, %%,", c, s, p, i, i, u, u, u));
+	printf("count: %i\n", printf("PRINTF:: c: %c, s: %s, p: %s, d: %d, i: %i, u: %u, x: %x, X: %X, %%,", c, s, p, i, i, u, u, u));
+	ft_printf("count: %i\n", ft_printf("PRINTF:: c: %c, s: %s, p: %s, d: %d, i: %i, u: %u, x: %x, X: %X, %%,", c, s, p, i, i, u, u, u));
 	return (0);
 }
