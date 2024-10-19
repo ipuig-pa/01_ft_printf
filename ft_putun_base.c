@@ -6,7 +6,7 @@
 /*   By: ipuig-pa <ipuig-pa@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 11:06:37 by ipuig-pa          #+#    #+#             */
-/*   Updated: 2024/10/18 16:50:41 by ipuig-pa         ###   ########.fr       */
+/*   Updated: 2024/10/19 11:54:48 by ipuig-pa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	ft_putun_base_n(uintptr_t nb, int n, char *base)
 	char	arr[32];
 	int		j;
 	int		printed_char;
+	int		printed_temp;
 
 	j = 0;
 	printed_char = 0;
@@ -31,7 +32,10 @@ static int	ft_putun_base_n(uintptr_t nb, int n, char *base)
 	j--;
 	while (j >= 0)
 	{
-		printed_char = printed_char + write(1, &arr[j], 1);
+		printed_temp = write(1, &arr[j], 1);
+		if (printed_temp == -1)
+			return (-1);
+		printed_char = printed_char + printed_temp;
 		j--;
 	}
 	return (printed_char);
