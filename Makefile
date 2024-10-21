@@ -16,7 +16,7 @@ all: $(LIBFT) $(NAME)
 $(LIBFT): 
 	make -C $(LIBFT_DIR)
 
-$(NAME): $(OBJECTS)
+$(NAME): $(OBJECTS) $(LIBFT)
 	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJECTS)
 
